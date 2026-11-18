@@ -1,326 +1,73 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Realizado com Sucesso</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      overflow: hidden;
-    }
+    <title>Login realizado | Harley Style</title>
 
-    #confetti-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
+    <link rel="stylesheet" href="sucesso.css">
 
-    .card {
-      background: #ffffff;
-      padding: 35px 30px;
-      border-radius: 24px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-      text-align: center;
-      max-width: 400px;
-      width: 90%;
-      z-index: 2;
-      animation: popUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
-
-    @keyframes popUp {
-      0% {
-        opacity: 0;
-        transform: scale(0.7) translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-    }
-
-    /* Container do dançarino */
-    .dancer-box {
-      width: 150px;
-      height: 165px;
-      margin: 0 auto 10px;
-      position: relative;
-    }
-
-    .dancer-svg {
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-    }
-
-    /* Animações da dança */
-    .dancer-body {
-      transform-origin: 100px 150px;
-      animation: danceBounce 0.55s ease-in-out infinite alternate;
-    }
-
-    .dancer-head {
-      transform-origin: 100px 68px;
-      animation: headBob 0.55s ease-in-out infinite alternate;
-    }
-
-    .arm-left {
-      transform-origin: 58px 92px;
-      animation: waveLeft 0.55s ease-in-out infinite alternate;
-    }
-
-    .arm-right {
-      transform-origin: 142px 92px;
-      animation: waveRight 0.55s ease-in-out infinite alternate;
-    }
-
-    .leg-left {
-      transform-origin: 82px 155px;
-      animation: stepLeft 0.55s ease-in-out infinite alternate;
-    }
-
-    .leg-right {
-      transform-origin: 118px 155px;
-      animation: stepRight 0.55s ease-in-out infinite alternate;
-    }
-
-    .floor-shadow {
-      transform-origin: 100px 195px;
-      animation: shadowPulse 0.55s ease-in-out infinite alternate;
-    }
-
-    @keyframes danceBounce {
-      0% {
-        transform: translateY(0px) rotate(-6deg) scaleY(0.96);
-      }
-      50% {
-        transform: translateY(-10px) rotate(0deg) scaleY(1.03);
-      }
-      100% {
-        transform: translateY(0px) rotate(6deg) scaleY(0.96);
-      }
-    }
-
-    @keyframes headBob {
-      0% {
-        transform: rotate(8deg) translateY(2px);
-      }
-      100% {
-        transform: rotate(-8deg) translateY(-2px);
-      }
-    }
-
-    @keyframes waveLeft {
-      0% {
-        transform: rotate(-35deg);
-      }
-      100% {
-        transform: rotate(25deg);
-      }
-    }
-
-    @keyframes waveRight {
-      0% {
-        transform: rotate(25deg);
-      }
-      100% {
-        transform: rotate(-35deg);
-      }
-    }
-
-    @keyframes stepLeft {
-      0% {
-        transform: translateY(-6px) rotate(10deg);
-      }
-      100% {
-        transform: translateY(0px) rotate(-5deg);
-      }
-    }
-
-    @keyframes stepRight {
-      0% {
-        transform: translateY(0px) rotate(5deg);
-      }
-      100% {
-        transform: translateY(-6px) rotate(-10deg);
-      }
-    }
-
-    @keyframes shadowPulse {
-      0% {
-        transform: scaleX(1.05);
-        opacity: 0.25;
-      }
-      50% {
-        transform: scaleX(0.85);
-        opacity: 0.15;
-      }
-      100% {
-        transform: scaleX(1.05);
-        opacity: 0.25;
-      }
-    }
-
-    h1 {
-      color: #1e293b;
-      font-size: 26px;
-      margin-bottom: 8px;
-    }
-
-    p {
-      color: #64748b;
-      font-size: 16px;
-      margin-bottom: 24px;
-      line-height: 1.5;
-    }
-
-    .btn {
-      display: inline-block;
-      background: #10b981;
-      color: #ffffff;
-      text-decoration: none;
-      padding: 12px 32px;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 16px;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
-    }
-
-    .btn:hover {
-      background: #059669;
-      transform: translateY(-2px);
-    }
-  </style>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-  <canvas id="confetti-canvas"></canvas>
+    <main class="success-container">
 
-  <div class="card">
-    <div class="dancer-box">
-      <svg class="dancer-svg" viewBox="0 0 200 210">
-        <!-- Sombra no chão -->
-        <ellipse class="floor-shadow" cx="100" cy="195" rx="52" ry="10" fill="#0f172a" />
+        <div class="background"></div>
 
-        <!-- Corpo principal animado -->
-        <g class="dancer-body">
-          <!-- Pernas -->
-          <g class="leg-left">
-            <rect x="68" y="148" width="22" height="36" rx="11" fill="#1e3a8a" />
-            <ellipse cx="75" cy="186" rx="15" ry="8" fill="#111827" />
-          </g>
-          <g class="leg-right">
-            <rect x="110" y="148" width="22" height="36" rx="11" fill="#1e3a8a" />
-            <ellipse cx="125" cy="186" rx="15" ry="8" fill="#111827" />
-          </g>
+        <section class="success-card">
 
-          <!-- Braços -->
-          <g class="arm-left">
-            <path d="M 60 95 Q 25 75 28 48" stroke="#f59e0b" stroke-width="18" stroke-linecap="round" fill="none" />
-            <circle cx="28" cy="46" r="10" fill="#fed7aa" />
-          </g>
-          <g class="arm-right">
-            <path d="M 140 95 Q 175 75 172 48" stroke="#f59e0b" stroke-width="18" stroke-linecap="round" fill="none" />
-            <circle cx="172" cy="46" r="10" fill="#fed7aa" />
-          </g>
+            <div class="brand">
+                <h1>HARLEY<span> STYLE</span></h1>
+                <p>LIVE TO RIDE</p>
+            </div>
 
-          <!-- Barrigão e Camiseta -->
-          <ellipse cx="100" cy="118" rx="52" ry="46" fill="#f59e0b" />
-          <!-- Detalhe da barriga redonda -->
-          <path d="M 62 128 Q 100 152 138 128" stroke="#d97706" stroke-width="4" stroke-linecap="round" fill="none" />
-          <!-- Cinto / Calça -->
-          <path d="M 54 142 Q 100 162 146 142 L 138 158 Q 100 172 62 158 Z" fill="#1e3a8a" />
-          <rect x="92" y="147" width="16" height="10" rx="2" fill="#fbbf24" />
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M5 12L10 17L20 7"/>
+                </svg>
+            </div>
 
-          <!-- Cabeça -->
-          <g class="dancer-head">
-            <!-- Rosto rechonchudo -->
-            <circle cx="100" cy="48" r="28" fill="#fed7aa" />
-            <!-- Bochechas -->
-            <circle cx="82" cy="54" r="5" fill="#fb7185" opacity="0.6" />
-            <circle cx="118" cy="54" r="5" fill="#fb7185" opacity="0.6" />
-            <!-- Cabelo -->
-            <path d="M 74 40 Q 82 16 104 20 Q 124 22 126 40 Q 112 28 100 30 Q 86 28 74 40 Z" fill="#334155" />
-            <!-- Olhos felizes -->
-            <path d="M 85 44 Q 90 38 95 44" stroke="#1e293b" stroke-width="3" stroke-linecap="round" fill="none" />
-            <path d="M 105 44 Q 110 38 115 44" stroke="#1e293b" stroke-width="3" stroke-linecap="round" fill="none" />
-            <!-- Sorrisão -->
-            <path d="M 88 56 Q 100 70 112 56 Z" fill="#ef4444" />
-          </g>
-        </g>
-      </svg>
-    </div>
+            <span class="status">AUTENTICAÇÃO CONCLUÍDA</span>
 
-    <h1>Parabéns! 🎉</h1>
-    <p>Login feito com sucesso!<br>Hora de comemorar!</p>
-    <button class="btn" onclick="window.location.href='#'">Entrar no Sistema</button>
-  </div>
+            <h2>ACESSO<br><span>LIBERADO!</span></h2>
 
-  <script>
-    const canvas = document.getElementById('confetti-canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+            <p class="description">
+                Seu login foi realizado com sucesso.
+                Seja bem-vindo à plataforma!
+            </p>
 
-    const pieces = [];
-    const colors = ['#10b981', '#3b82f6', '#f59e0b', '#ec4899', '#8b5cf6'];
+            <div class="divider"></div>
 
-    for (let i = 0; i < 120; i++) {
-      pieces.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height - canvas.height,
-        w: Math.random() * 10 + 5,
-        h: Math.random() * 6 + 4,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        speed: Math.random() * 3 + 2,
-        angle: Math.random() * 360,
-        spin: Math.random() * 0.2 - 0.1
-      });
-    }
+            <div class="user-info">
+                <span>STATUS DA CONTA</span>
+                <strong>
+                    <i></i> CONECTADO
+                </strong>
+            </div>
 
-    function updateConfetti() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      pieces.forEach(p => {
-        p.y += p.speed;
-        p.angle += p.spin;
-        if (p.y > canvas.height) {
-          p.y = -20;
-          p.x = Math.random() * canvas.width;
-        }
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.angle);
-        ctx.fillStyle = p.color;
-        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-        ctx.restore();
-      });
-      requestAnimationFrame(updateConfetti);
-    }
+            <button id="continuar">
+                ACESSAR PAINEL
+                <span>→</span>
+            </button>
 
-    updateConfetti();
+            <p class="footer">
+                FREEDOM • POWER • ROAD
+            </p>
 
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-  </script>
+        </section>
+
+        <div class="background-text">
+            RIDE YOUR OWN WAY
+        </div>
+
+    </main>
+
+    <script src="sucesso.js"></script>
 
 </body>
 </html>

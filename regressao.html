@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acesso Negado | Garage Club</title>
+  <link href="https://googleapis.com" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #111111;
+      /* Textura sutil de asfalto / metal escuro */
+      background-image: 
+        radial-gradient(#262626 1px, transparent 1px),
+        radial-gradient(#1c1c1c 1px, #111111 1px);
+      background-size: 20px 20px;
+      background-position: 0 0, 10px 10px;
+      color: #ffffff;
+      font-family: 'Roboto', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Faixas estilo pista de corrida no topo e base */
+    .road-stripe {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      height: 14px;
+      background: repeating-linear-gradient(
+        90deg,
+        #FF6600,
+        #FF6600 40px,
+        #1a1a1a 40px,
+        #1a1a1a 80px
+      );
+      z-index: 10;
+      box-shadow: 0 0 15px rgba(255, 102, 0, 0.4);
+    }
+    .road-stripe.top { top: 0; }
+    .road-stripe.bottom { bottom: 0; }
+
+    /* Container Principal estilo Escudo / Placa de Aço */
+    .shield-card {
+      background: linear-gradient(145deg, #1e1e1e, #121212);
+      border: 4px solid #FF6600;
+      outline: 3px solid #d4d4d4;
+      outline-offset: -10px;
+      border-radius: 12px;
+      padding: 45px 35px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 102, 0, 0.25);
+      position: relative;
+      z-index: 5;
+      animation: engineShake 0.45s ease-in-out;
+    }
+
+    /* Efeito de motor falhando ao carregar o erro */
+    @keyframes engineShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px) rotate(-1deg); }
+      40% { transform: translateX(8px) rotate(1deg); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+
+    /* Emblema Bar & Shield adaptado */
+    .badge-header {
+      background-color: #FF6600;
+      color: #000000;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      display: inline-block;
+      border: 2px solid #ffffff;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    }
+
+    /* Ícone SVG de Moto Custom */
+    .moto-icon {
+      width: 110px;
+      height: auto;
+      margin: 0 auto 15px auto;
+      display: block;
+      filter: drop-shadow(0 0 8px rgba(255, 102, 0, 0.6));
+    }
+
+    h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.6rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #ffffff;
+      text-shadow: 2px 2px 0px #FF6600;
+      margin-bottom: 12px;
+    }
+
+    .error-code {
+      display: inline-block;
+      background: #2a2a2a;
+      color: #FF6600;
+      font-weight: bold;
+      font-size: 0.85rem;
+      padding: 4px 12px;
+      border-radius: 4px;
+      border: 1px solid #444;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+
+    p {
+      color: #cccccc;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      margin-bottom: 28px;
+    }
+
+    p strong {
+      color: #ffffff;
+    }
+
+    /* Botão estilo ignição / cromado */
+    .btn-retry {
+      display: inline-block;
+      background: linear-gradient(180deg, #ff7b1c 0%, #e05200 100%);
+      color: #ffffff;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      padding: 14px 32px;
+      border: 2px solid #ffffff;
+      border-radius: 6px;
+      box-shadow: 0 6px 0 #8a3200, 0 10px 20px rgba(0,0,0,0.6);
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .btn-retry:hover {
+      background: linear-gradient(180deg, #ff8c38 0%, #ff6600 100%);
+      transform: translateY(-2px);
+    }
+
+    .btn-retry:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #8a3200;
+    }
+
+    .secondary-link {
+      display: block;
+      margin-top: 18px;
+      color: #999999;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .secondary-link:hover {
+      color: #FF6600;
+      text-decoration: underline;
+    }
+
+    /* Pista e Motinhas animadas passando no fundo */
+    .highway {
+      position: fixed;
+      bottom: 14px;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      pointer-events: none;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .biker {
+      position: absolute;
+      bottom: 4px;
+      left: -120px;
+      width: 90px;
+      animation: rideAcross 7s linear infinite;
+    }
+
+    .biker.second {
+      width: 70px;
+      opacity: 0.65;
+      animation: rideAcross 11s linear infinite;
+      animation-delay: 3.5s;
+    }
+
+    @keyframes rideAcross {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(100vw + 250px));
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="road-stripe top"></div>
+
+  <main class="shield-card">
+    <div class="badge-header">MOTOR GARAGE • SECURITY</div>
+
+    <!-- Ilustração SVG de Motocicleta Custom -->
+    <svg class="moto-icon" viewBox="0 0 200 110" fill="none" xmlns="http://w3.org">
+      <!-- Roda Traseira -->
+      <circle cx="42" cy="80" r="24" stroke="#d4d4d4" stroke-width="6" fill="#1a1a1a"/>
+      <circle cx="42" cy="80" r="10" stroke="#FF6600" stroke-width="3"/>
+      <!-- Roda Dianteira -->
+      <circle cx="158" cy="80" r="24" stroke="#d4d4d4" stroke-width="6" fill="#1a1a1a"/>
+      <circle cx="158" cy="80" r="10" stroke="#FF6600" stroke-width="3"/>
+      <!-- Garfo Dianteiro (Chopper) -->
+      <line x1="158" y1="80" x2="124" y2="25" stroke="#e5e5e5" stroke-width="5" stroke-linecap="round"/>
+      <!-- Guidão -->
+      <path d="M124 25 L112 16 L102 18" stroke="#e5e5e5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Quadro e Escapamento -->
+      <path d="M42 80 L85 80 L128 45 L95 45 L62 65 Z" stroke="#999999" stroke-width="4" fill="#262626"/>
+      <path d="M75 78 L25 78" stroke="#e5e5e5" stroke-width="5" stroke-linecap="round"/>
+      <!-- Tanque Laranja Harley -->
+      <path d="M88 42 C100 32, 122 34, 130 46 L102 54 Z" fill="#FF6600" stroke="#ffffff" stroke-width="1.5"/>
+      <!-- Banco -->
+      <path d="M55 62 Q75 55 92 52 L88 60 L55 66 Z" fill="#111111" stroke="#666666" stroke-width="1.5"/>
+      <!-- Farol -->
+      <circle cx="136" cy="36" r="5" fill="#FFD166"/>
+    </svg>
+
+    <h1>Acesso Negado</h1>
+    <div class="error-code">ERRO 401 • IGNIÇÃO BLOQUEADA</div>
+
+    <p>
+      <strong>Usuário ou senha incorretos.</strong><br>
+      Essa chave não dá partida neste motor. Verifique suas credenciais e tente pegar a estrada novamente.
+    </p>
+
+    <a href="login.html" class="btn-retry">Tentar Novamente</a>
+    <a href="recuperar-senha.html" class="secondary-link">Esqueceu sua senha de piloto?</a>
+  </main>
+
+  <!-- Motinhas passando na rodovia inferior -->
+  <div class="highway">
+    <!-- Motinha 1 -->
+    <svg class="biker" viewBox="0 0 200 110" fill="none" xmlns="http://w3.org">
+      <circle cx="42" cy="80" r="22" stroke="#888" stroke-width="6" fill="#111"/>
+      <circle cx="158" cy="80" r="22" stroke="#888" stroke-width="6" fill="#111"/>
+      <line x1="158" y1="80" x2="124" y2="25" stroke="#ccc" stroke-width="5" stroke-linecap="round"/>
+      <path d="M42 80 L85 80 L128 45 L95 45 L62 65 Z" fill="#333"/>
+      <path d="M88 42 C100 32, 122 34, 130 46 L102 54 Z" fill="#FF6600"/>
+      <polygon points="165,36 200,26 200,46" fill="rgba(255, 209, 102, 0.35)"/>
+    </svg>
+
+    <!-- Motinha 2 -->
+    <svg class="biker second" viewBox="0 0 200 110" fill="none" xmlns="http://w3.org">
+      <circle cx="42" cy="80" r="22" stroke="#777" stroke-width="6" fill="#111"/>
+      <circle cx="158" cy="80" r="22" stroke="#777" stroke-width="6" fill="#111"/>
+      <line x1="158" y1="80" x2="124" y2="25" stroke="#bbb" stroke-width="5" stroke-linecap="round"/>
+      <path d="M88 42 C100 32, 122 34, 130 46 L102 54 Z" fill="#FF6600"/>
+    </svg>
+  </div>
+
+  <div class="road-stripe bottom"></div>
+
+</body>
+</html>
